@@ -1,0 +1,155 @@
+:root {
+  --primary-purple: #6a0dad;
+  --lava-fuschia: #ff00ff;
+  --bg-gradient: linear-gradient(45deg, #2e0249, #570a57, #a91079, #2e0249);
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-gradient);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #fff; /* Default text to white for the dark background */
+  min-height: 100vh;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(0.95); opacity: 1; }
+}
+
+.white-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  
+  /* The Skew */
+  transform: skewX(-15deg); 
+  
+  border-radius: 4px; 
+  width: 100%;
+  max-width: 600px; /* Limits the width so it stays a "blade" */
+  height: 100px;    /* Much shorter height */
+  padding: 0 40px;  /* Horizontal padding */
+  
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  /* Layout: Row for Icon | Text */
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* FIX: Un-skew the internal content so text is horizontal */
+.white-card > * {
+  transform: skewX(15deg);
+}
+
+.white-card h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.white-card p {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 400;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.white-card:hover {
+  transform: skewX(-15deg) translateX(10px); /* Slides right slightly on hover */
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.white-card span {
+  color: white !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.white-card.is-open,
+.white-card.is-open:hover {
+  transform: skewX(-15deg) translateX(0) !important;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.15); /* Keep the highlight color */
+}
+
+.control-btn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(5px);
+}
+
+/* The Rotating Wheel Container */
+.nav-wheel-container {
+  position: fixed;
+  bottom: -250px; /* Hide the bottom half of the circle */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -20px 50px rgba(0,0,0,0.3);
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 100;
+}
+
+/* Individual Slice */
+.nav-wheel-container {
+  position: fixed;
+  bottom: -300px; /* Adjusted to show exactly half the circle */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 100;
+}
+
+/* Audio Visualizer Animation */
+@keyframes equalize {
+  0% { transform: scaleY(0.1); }
+  50% { transform: scaleY(1); }
+  100% { transform: scaleY(0.1); }
+}
+
+.vis-bar {
+  width: 6px;
+  background: var(--lava-fuschia);
+  border-radius: 3px;
+  transform-origin: bottom;
+  transform: scaleY(0.1); /* Resting state */
+  transition: transform 0.2s ease;
+}
+
+.vis-bar.playing {
+  animation: equalize 1s infinite ease-in-out;
+}
